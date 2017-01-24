@@ -59,6 +59,24 @@
 
 <script>
 
+  document.addEventListener('keypress', (event) => {
+    let code = event.keyCode > 90 ? event.keyCode - 32 : event.keyCode
+    let audio = document.querySelector(`audio[data-key="${code}"]`)
+    let button = document.querySelector(`.key[data-key="${code}"]`)
+    button.classList.add('playing')
+    playSound(audio)
+  })
+
+  document.querySelectorAll(`div[data-key]`).forEach(e => e.addEventListener('transitionend', function (event) {
+    if (event.propertyName  !== 'transform') return;
+    this.classList.remove('playing')
+  }))
+
+  function playSound(element) {
+    if (!element) return
+    element.currentTime = 0
+    element.play()
+  }
 </script>
 
 
